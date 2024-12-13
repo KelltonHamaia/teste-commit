@@ -99,7 +99,7 @@ const message = async () => {
     try {
         if(updateRepo) {
             let response = await execa("git push");
-            console.log(response);
+            console.log(response.stderr);
         }
     } catch (error) {
         console.log(error) 
