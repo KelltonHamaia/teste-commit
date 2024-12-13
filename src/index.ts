@@ -8,7 +8,7 @@ const message = async () => {
 
     let status = await execa("git", ["status"]); 
     if (status.stdout.includes("no changes added to commit")) { 
-        console.log("Nenhuma alteração para commitar.");
+        console.log("Nenhuma alteração para commitar.\nAdicione arquivos ao commit utilizando\n'git add <arquivo>'\n ou\n'git add .'");
         exit(0); 
     }
 
@@ -90,7 +90,7 @@ const message = async () => {
     const updateRepo = await select({
         message: "Deseja enviar suas alterações para o resositório remoto?",
         choices: [
-            { name: "🚀  Sim", value: true },
+            { name: "🚀 Sim", value: true },
             { name: "💣 Não", value: false },
         ],
         loop: false,
@@ -99,14 +99,13 @@ const message = async () => {
     try {
         if(updateRepo) {
             let response = await execa("git push");
-            console.log(response.stdout);
+            console.log(response);
         }
     } catch (error) {
         console.log(error) 
         console.log("Erro ao executar o push.");
         exit(1);
     }
-
 };
 
 message();
