@@ -1,7 +1,17 @@
+#!/usr/bin/env node
 import { select, input, Separator } from "@inquirer/prompts";
 import { exit } from "process";
+
+
 const message = async () => {
     const { execa } = await import("execa");
+
+    let status = await execa("git", ["status"]); 
+    if (status.stdout.includes("no changes added to commit")) { 
+        console.log("Nenhuma alteração para commitar.");
+        exit(0); 
+    }
+
     const commitNature = await select({
         message: "Qual tipo de commit deseja fazer?",
         choices: [
@@ -64,15 +74,17 @@ const message = async () => {
     const commitMessage = `${commitNature}: ${commitTitle}\n\n- ${commitBody}`;
 
     if (confirmCommit === false) {
-        return exit("Finalizando script sem commit.");
+        return exit(1);
     }
 
     try {
         let response = await execa("git", ["commit", "-m", commitMessage]);
         console.log(response.stdout);
     } catch (error) {
+        console.log(error) 
         console.log("Erro ao executar o commit.");
-        exit("Finalizando script sem commit.");
+        exit(1);
     }
 };
+
 message();
