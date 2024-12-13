@@ -1,0 +1,21 @@
+{
+  "name": "commits",
+  "version": "1.0.0",
+  "main": "dist/index.js",
+  "scripts": {
+    "start": "tsc && node dist/index.js",
+    "dev": "nodemon src/index.mts"
+  },
+  "bin": {
+    "commits": "./dist/index.js"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@inquirer/prompts": "^7.2.0",
+    "execa": "^9.5.2",
+    "ts-node": "^10.9.2"
+  }
+}
